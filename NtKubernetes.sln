@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.13.35825.156 d17.13
+VisualStudioVersion = 17.13.35825.156
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NtKubernetes", "NtKubernetes\NtKubernetes.csproj", "{15D2465A-D9CF-4009-8DD0-9A968B36F7BB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetKubernetes", "_backend\NetKubernetes\NetKubernetes.csproj", "{2202DD90-6C39-4BB7-9FF4-D566D45F9394}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +11,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{15D2465A-D9CF-4009-8DD0-9A968B36F7BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{15D2465A-D9CF-4009-8DD0-9A968B36F7BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{15D2465A-D9CF-4009-8DD0-9A968B36F7BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{15D2465A-D9CF-4009-8DD0-9A968B36F7BB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2202DD90-6C39-4BB7-9FF4-D566D45F9394}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2202DD90-6C39-4BB7-9FF4-D566D45F9394}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2202DD90-6C39-4BB7-9FF4-D566D45F9394}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2202DD90-6C39-4BB7-9FF4-D566D45F9394}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

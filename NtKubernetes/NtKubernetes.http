@@ -1,6 +1,0 @@
-@NtKubernetes_HostAddress = http://localhost:5289
-
-GET {{NtKubernetes_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
