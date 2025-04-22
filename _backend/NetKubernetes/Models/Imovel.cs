@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace NetKubernetes.Models;
 
 //essa é a classe Inmueble
-public class Propriedade {
+public class Imovel {
     [Key]
     [Required]
     public int Id { get; set; }
