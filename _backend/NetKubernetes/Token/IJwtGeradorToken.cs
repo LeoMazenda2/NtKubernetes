@@ -3,6 +3,6 @@
 namespace NetKubernetes.Token;
 
 public interface IJwtGeradorToken{
-    string GearToken(Usuario usuario);
+    string GerarToken(Usuario usuario);
 
 }
