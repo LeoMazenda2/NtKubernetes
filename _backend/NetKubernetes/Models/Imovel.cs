@@ -14,4 +14,5 @@ public class Imovel {
     public decimal Preco{ get; set; }
     public string Picture{ get; set; }
     public DateTime DataCriacao { get; set; }
+    public Guid? UsuarioId { get; set; }
 }

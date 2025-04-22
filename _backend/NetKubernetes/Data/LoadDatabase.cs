@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using NetKubernetes.Models;
-
 namespace NetKubernetes.Data;
 
 public class LoadDatabase
