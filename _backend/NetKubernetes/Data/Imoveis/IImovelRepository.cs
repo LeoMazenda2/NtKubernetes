@@ -3,9 +3,9 @@
 namespace NetKubernetes.Data.Imoveis;
 
 public interface IImovelRepository {
-    bool SaveChange();
-    IEnumerable<Imovel> GetAll();
-    Imovel GetById(int id);
+    Task<bool> SaveChange();
+    Task<IEnumerable<Imovel>> GetAll();
+    Task<Imovel> GetById(int id);
     Task Create(Imovel imovel);
-    void Delete(int id);
+    Task Delete(int id);
 }

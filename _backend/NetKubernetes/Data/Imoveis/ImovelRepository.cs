@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using NetKubernetes.Middleware;
 using NetKubernetes.Models;
 using NetKubernetes.Token;
@@ -40,29 +41,29 @@ namespace NetKubernetes.Data.Imoveis
             imovel.DataCriacao = DateTime.Now;
             imovel.UsuarioId = Guid.Parse(usuario!.Id);
 
-            _context.Imoveis!.Add(imovel);
+            await _context.Imoveis!.AddAsync(imovel);
         }
 
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
-            var imovel = _context.Imoveis!.FirstOrDefault(i => i.Id == id);
+            var imovel = await _context.Imoveis!.FirstOrDefaultAsync(i => i.Id == id);
             //if (imovel == null) throw new Exception("Imovel não encontrado");
-            _context.Imoveis!.Remove(imovel!);
+             _context.Imoveis!.Remove(imovel!);
         }
 
-        public IEnumerable<Imovel> GetAll()
+        public async Task<IEnumerable<Imovel>> GetAll()
         {
-            return _context.Imoveis!.ToList();
+            return await _context.Imoveis!.ToListAsync();
         }
 
-        public Imovel GetById(int id)
+        public async Task<Imovel> GetById(int id)
         {
-            return _context.Imoveis!.FirstOrDefault(x => x.Id == id)!;
+            return await _context.Imoveis!.FirstOrDefaultAsync(x => x.Id == id)!;
         }
 
-        public bool SaveChange()
+        public async Task<bool> SaveChange()
         {
-            return (_context.SaveChanges() > 0);
+            return (await _context.SaveChangesAsync() > 0);
 
         }
     }

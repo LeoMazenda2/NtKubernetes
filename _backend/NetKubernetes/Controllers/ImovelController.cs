@@ -20,16 +20,16 @@ public class ImovelController : ControllerBase
     }
 
     [HttpGet]
-    public ActionResult<IEnumerable<ImovelResponseDto>> GetImoveis()
+    public async Task<ActionResult<IEnumerable<ImovelResponseDto>>> GetImoveis()
     {
-        var imoveis = _repository.GetAll();
+        var imoveis = await _repository.GetAll();
         return Ok(_mapper.Map<IEnumerable<ImovelResponseDto>>(imoveis));
     }
 
     [HttpGet("{id}", Name = "GetImovelById")]
-    public ActionResult<ImovelResponseDto> GetImovelById(int id)
+    public async Task<ActionResult<ImovelResponseDto>> GetImovelById(int id)
     {
-        var imovel = _repository.GetById(id);
+        var imovel = await _repository.GetById(id);
         if (imovel is null)
         {
             throw new MiddlewareException(
@@ -41,7 +41,7 @@ public class ImovelController : ControllerBase
     }
 
     [HttpPost]
-    public ActionResult<ImovelResponseDto> CreateImovel([FromBody] ImovelRequestDto imovel)
+    public async Task<ActionResult<ImovelResponseDto>> CreateImovel([FromBody] ImovelRequestDto imovel)
     {
         if (imovel is null)
         {
@@ -51,18 +51,18 @@ public class ImovelController : ControllerBase
             );
         }
         var imovelModel = _mapper.Map<Models.Imovel>(imovel);
-        _repository.Create(imovelModel);
-        _repository.SaveChange();
+        await _repository.Create(imovelModel);
+        await _repository.SaveChange();
 
         var imovelResponse = _mapper.Map<ImovelResponseDto>(imovelModel);
 
         return CreatedAtRoute(nameof(GetImovelById), new { id = imovelResponse.Id }, imovelResponse);
-    }   
+    }
 
     [HttpDelete("{id}")]
-    public ActionResult DeleteImovel(int id)
+    public async Task<ActionResult> DeleteImovel(int id)
     {
-        var imovelModel = _repository.GetById(id);
+        var imovelModel = await _repository.GetById(id);
         if (imovelModel is null)
         {
             throw new MiddlewareException(
@@ -70,8 +70,8 @@ public class ImovelController : ControllerBase
                 new { mensagem = $"Não foi encontrado o id: {id}" }
             );
         }
-        _repository.Delete(id);
-        _repository.SaveChange();
-        return NoContent();
+        await _repository.Delete(id);
+        await _repository.SaveChange();
+        return Ok();
     }
 }
