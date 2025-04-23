@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using NetKubernetes.Middleware;
 using NetKubernetes.Models;
 using NetKubernetes.Token;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace NetKubernetes.Data.Imoveis
@@ -10,8 +12,8 @@ namespace NetKubernetes.Data.Imoveis
         private readonly AppDbContext _context;
         private readonly IUsuarioSessao _usuarioSessao;
         private readonly UserManager<Usuario> _userManager;
-        public ImovelRepository(AppDbContext context, 
-            IUsuarioSessao usuarioSessao, 
+        public ImovelRepository(AppDbContext context,
+            IUsuarioSessao usuarioSessao,
             UserManager<Usuario> userManager)
         {
 
@@ -23,6 +25,17 @@ namespace NetKubernetes.Data.Imoveis
         public async Task Create(Imovel imovel)
         {
             var usuario = await _userManager.FindByNameAsync(_usuarioSessao.ObterUsuarioSessao());
+            if (usuario == null)
+                throw new MiddlewareException(
+                    HttpStatusCode.Unauthorized,
+                    new { Mensagem = "Usuário não é válido para fazer essa inserção" }
+                    );
+
+            if (imovel is null)
+                throw new MiddlewareException(
+                    HttpStatusCode.BadRequest,
+                    new { Mensagem = "Imóvel não pode ser nulo" }
+                    );
 
             imovel.DataCriacao = DateTime.Now;
             imovel.UsuarioId = Guid.Parse(usuario!.Id);
@@ -39,17 +52,17 @@ namespace NetKubernetes.Data.Imoveis
 
         public IEnumerable<Imovel> GetAll()
         {
-           return _context.Imoveis!.ToList();
+            return _context.Imoveis!.ToList();
         }
 
         public Imovel GetById(int id)
         {
-            return _context.Imoveis!.FirstOrDefault(x => x.Id == id)!; 
+            return _context.Imoveis!.FirstOrDefault(x => x.Id == id)!;
         }
 
         public bool SaveChange()
         {
-           return (_context.SaveChanges() > 0);
+            return (_context.SaveChanges() > 0);
 
         }
     }

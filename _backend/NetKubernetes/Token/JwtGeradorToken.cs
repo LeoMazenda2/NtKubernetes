@@ -8,7 +8,7 @@ namespace NetKubernetes.Token;
 
 public class JwtGeradorToken : IJwtGeradorToken
 {
-    public string GearToken(Usuario usuario)
+    public string GerarToken(Usuario usuario)
     {
         var claims = new List<Claim> {
            new Claim(JwtRegisteredClaimNames.NameId, usuario.UserName!),
