@@ -38,8 +38,8 @@ public class ManagerMiddleware
                 context.Response.StatusCode = (int)me.Codigo;
                 break;
 
-            case Exception ex:
-                logger.LogError(ex, "eRRO DE Servidor");
+            case Exception e :
+                logger.LogError(ex, "Erro de servidor");
                 erros = string.IsNullOrWhiteSpace(ex.Message) ? "Erro" : ex.Message;
                 context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
                 break;

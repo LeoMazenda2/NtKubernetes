@@ -57,7 +57,7 @@ namespace NetKubernetes.Data.Usuarios
             return TranformerUserToUserDto(usuario!);
         }
 
-        public async Task<UsuarioResponseDto> Login(UsuaioLoginRequestDto request)
+        public async Task<UsuarioResponseDto> Login(UsuarioLoginRequestDto request)
         {
             var usuario = await _userManager.FindByEmailAsync(request.Email!);
 
