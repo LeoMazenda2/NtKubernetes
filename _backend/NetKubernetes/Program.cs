@@ -18,9 +18,10 @@ using System.Text;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddDbContext<AppDbContext>(opt => {
-    opt.LogTo(Console.WriteLine, new [] {
-        DbLoggerCategory.Database.Command.Name}, 
+builder.Services.AddDbContext<AppDbContext>(opt =>
+{
+    opt.LogTo(Console.WriteLine, new[] {
+        DbLoggerCategory.Database.Command.Name},
         LogLevel.Information).EnableSensitiveDataLogging();
 
     opt.UseSqlServer(builder.Configuration.GetConnectionString("SqlServerConnection")!);
@@ -28,7 +29,7 @@ builder.Services.AddDbContext<AppDbContext>(opt => {
 
 builder.Services.AddScoped<IImovelRepository, ImovelRepository>();
 
-builder.Services.AddControllers( opt =>
+builder.Services.AddControllers(opt =>
 {
     var policy = new AuthorizationPolicyBuilder()
         .RequireAuthenticatedUser()
@@ -40,7 +41,8 @@ builder.Services.AddControllers( opt =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-var mapperConfig = new AutoMapper.MapperConfiguration(mc => {
+var mapperConfig = new AutoMapper.MapperConfiguration(mc =>
+{
     mc.AddProfile(new ImovelProfile());
 });
 
@@ -79,6 +81,7 @@ builder.Services.AddCors(o => o.AddPolicy("corsapp", builder =>
 
 var app = builder.Build();
 
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -89,10 +92,30 @@ if (app.Environment.IsDevelopment())
 app.UseMiddleware<ManagerMiddleware>();
 
 app.UseAuthentication();
+app.UseCors("corsapp");
 //app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
 app.MapControllers();
+
+
+using (var ambiente = app.Services.CreateAsyncScope())
+{
+    var services = ambiente.ServiceProvider;
+    try
+    {
+        var userManager = services.GetRequiredService<UserManager<Usuario>>();
+        var context = services.GetRequiredService<AppDbContext>();
+        await context.Database.MigrateAsync();
+        await LoadDatabase.InserirDados(context, userManager);
+    }
+    catch (Exception ex)
+    {
+        var logger = services.GetRequiredService<ILogger<Program>>();
+        logger.LogError(ex, "Ocorreu um erro ao na migração dos dados");
+    }
+}
+
 
 app.Run();
