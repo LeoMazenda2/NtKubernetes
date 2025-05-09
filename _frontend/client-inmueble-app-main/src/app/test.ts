@@ -1,1 +1,1 @@
-export const teste = "Tese dde classe"
+export const teste = "Tese dessa ula"

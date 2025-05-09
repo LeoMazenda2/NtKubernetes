@@ -23,17 +23,31 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
-            "assets": [
-              "src/favicon.ico",
-              "src/assets"
-            ],
-            "styles": [
-              "src/styles.scss"
-            ],
+            "outputHashing": "all",
+            "optimization": false,
+            "sourceMap": true,
+            "buildOptimizer": false,
+            "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
+            "assets": ["src/favicon.ico", "src/assets"],
+            "styles": ["src/styles.scss"],
             "scripts": []
           },
           "configurations": {
             "prd": {
+              "optimization": true,
+              "sourceMap": false,
+              "buildOptimizer": true,
               "budgets": [
                 {
                   "type": "initial",
@@ -60,20 +74,22 @@
                   "replace": "src/environments/environment.ts",
                   "with": "src/environments/environment.dev.ts"
                 }
-              ],
-              
+              ]
             }
-          },
-          "defaultConfiguration": "production"
+          }
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "cli-inmueble-app:build",
+            "port": 5200
+          },
           "configurations": {
-            "production": {
-              "browserTarget": "cli-inmueble-app:build:production"
+            "prod": {
+              "browserTarget": "cli-inmueble-app:build:prod"
             },
-            "development": {
-              "browserTarget": "cli-inmueble-app:build:development"
+            "dev": {
+              "browserTarget": "cli-inmueble-app:build:dev"
             }
           },
           "defaultConfiguration": "development"
@@ -92,17 +108,15 @@
             "tsConfig": "tsconfig.spec.json",
             "karmaConfig": "karma.conf.js",
             "inlineStyleLanguage": "scss",
-            "assets": [
-              "src/favicon.ico",
-              "src/assets"
-            ],
-            "styles": [
-              "src/styles.scss"
-            ],
+            "assets": ["src/favicon.ico", "src/assets"],
+            "styles": ["src/styles.scss"],
             "scripts": []
           }
         }
       }
     }
+  },
+  "cli": {
+    "analytics": "7d2722cd-a8fb-4328-a668-bc81ea2895e3"
   }
 }
